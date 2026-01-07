@@ -9,7 +9,8 @@ cd "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ $NEED_UBUNTU_DEPS == true ]]; then
     sudo add-apt-repository ppa:deadsnakes/ppa -y
     sudo apt-get update
-    sudo apt install -y python3.11 python3.11-dev python3.11-venv rename zstd libudev-dev
+    sudo apt install -y python3.11 python3.11-dev python3.11-venv rename zstd \
+        libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler
 fi
 
 # Clone sig repo

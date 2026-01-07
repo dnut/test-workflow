@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate fixtures
+        run: ./generate.sh
+
+      - name: Get commit hashes
+        id: commits
+        run: |
+          . sig/conformance/commits.env
+          echo "test_vectors=$TEST_VECTORS_COMMIT" >> $GITHUB_OUTPUT
+          echo "solfuzz_agave=$SOLFUZZ_AGAVE_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: test-vectors-${{ steps.commits.outputs.test_vectors }}-solfuzz-agave-${{ steps.commits.outputs.solfuzz_agave }}
+          name: test-vectors-${{ steps.commits.outputs.test_vectors }}-solfuzz-agave-${{ steps.commits.outputs.solfuzz_agave }}
+          body: |
+            Automated release from commit ${{ github.sha }}
+            
+            **test-vectors:** ${{ steps.commits.outputs.test_vectors }}
+            **solfuzz-agave:** ${{ steps.commits.outputs.solfuzz_agave }}
+          generate_release_notes: true
+          make_latest: true
+          files: |
+            conformance-fixtures.tar.zst

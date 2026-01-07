@@ -21,8 +21,8 @@ scripts/setup-env.sh get-solfuzz-agave
 scripts/setup-env.sh get-test-vectors
 scripts/setup-env.sh get-solana-conformance
 source env/pyvenv/bin/activate
-./run.py --create --no-run  # Create test fixtures
-popd
+# ./run.py --create --no-run  # Create test fixtures
+# popd
 
-# Create tarball of generated fixtures
-tar --zstd -cf fixtures.tar.zst -C sig/conformance/env test-fixtures
+# # Create tarball of generated fixtures
+# tar --zstd -cf fixtures.tar.zst -C sig/conformance/env test-fixtures

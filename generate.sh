@@ -17,9 +17,11 @@ fi
 
 git clone --depth=1 https://github.com/Syndica/sig.git sig
 pushd sig/conformance
-yes | scripts/setup-env.sh       # Install conformance code
-source env/pyvenv/bin/activate   # Activate the Python environment
-./run.py --create --no-run       # Create test fixtures
+scripts/setup-env.sh get-solfuzz-agave
+scripts/setup-env.sh get-test-vectors
+scripts/setup-env.sh get-solana-conformance
+source env/pyvenv/bin/activate
+./run.py --create --no-run  # Create test fixtures
 popd
 
 # Create tarball of generated fixtures

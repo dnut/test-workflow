@@ -15,13 +15,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Delete 33.8 GiB of unneeded data
+        run: |
+          sudo rm -rf /usr/local/lib/android      # 11.9 GiB
+          sudo rm -rf /usr/local/.ghcup           # 6.3 GiB
+          sudo rm -rf /usr/local/share/powershell # 1.2 GiB
+          sudo rm -rf /usr/local/share/chromium   # 618 MiB
+          sudo rm -rf /usr/local/julia1.12.2      # 1.0 GiB
+          sudo rm -rf /usr/share/dotnet           # 4.0 GiB
+          sudo rm -rf /usr/share/swift            # 3.1 GiB
+          sudo rm -rf /opt/hostedtoolcache        # 5.7 GiB
+
       - name: Generate fixtures
         run: ./generate.sh
-
-      - name: Debug via tmate
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
 
       - name: Get commit hashes
         id: commits
@@ -43,4 +49,4 @@ jobs:
           generate_release_notes: true
           make_latest: true
           files: |
-            conformance-fixtures.tar.zst
+            fixtures.tar.zst

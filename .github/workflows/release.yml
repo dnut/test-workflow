@@ -46,7 +46,6 @@ jobs:
             
             **test-vectors:** ${{ steps.commits.outputs.test_vectors }}
             **solfuzz-agave:** ${{ steps.commits.outputs.solfuzz_agave }}
-          generate_release_notes: true
           make_latest: true
           files: |
             fixtures.tar.zst
